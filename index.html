@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VlogSphere - Share Your Story With The World</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <h1>VlogSphere</h1>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="add-vlog.html" class="nav-link">Add Vlog</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h2 class="hero-title">Share Your Story With The World</h2>
+          <p class="hero-subtitle">
+            Upload and explore vlogs from creators around the globe
+          </p>
+          <a href="add-vlog.html" class="btn btn-primary btn-large"
+            >Add Your Vlog</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="search-section">
+      <div class="container">
+        <div class="search-filter-wrapper">
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search vlogs by title..."
+            />
+          </div>
+          <div class="filter-box">
+            <select id="categoryFilter" class="category-select">
+              <option value="all">All Categories</option>
+              <option value="Travel">Travel</option>
+              <option value="Tech">Tech</option>
+              <option value="Food">Food</option>
+              <option value="Daily">Daily</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Music">Music</option>
+              <option value="Education">Education</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vlog Listing Section -->
+    <section class="vlogs-section">
+      <div class="container">
+        <div id="vlogsContainer" class="vlogs-grid">
+          <!-- Vlog cards will be dynamically inserted here -->
+        </div>
+        <div id="loadingMessage" class="message">Loading vlogs...</div>
+        <div id="emptyMessage" class="message hidden">
+          No vlogs found. Be the first to add one!
+        </div>
+        <div id="errorMessage" class="message error hidden">
+          Unable to load vlogs. Please try again later.
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 VlogSphere. Share your story with the world.</p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

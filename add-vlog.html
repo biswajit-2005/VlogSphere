@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Your Vlog - VlogSphere</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <h1>VlogSphere</h1>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="add-vlog.html" class="nav-link active">Add Vlog</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Add Vlog Section -->
+    <section class="add-vlog-section">
+      <div class="container">
+        <div class="form-wrapper">
+          <h2 class="form-title">Add Your Vlog</h2>
+          <p class="form-description">
+            Share your story with the VlogSphere community
+          </p>
+
+          <!-- Success Message -->
+          <div id="successMessage" class="alert alert-success hidden">
+            <strong>Success!</strong> Your vlog has been submitted successfully.
+          </div>
+
+          <!-- Error Message -->
+          <div id="errorMessage" class="alert alert-error hidden">
+            <strong>Error!</strong>
+            <span id="errorText">Something went wrong. Please try again.</span>
+          </div>
+
+          <!-- Add Vlog Form -->
+          <form id="addVlogForm" class="vlog-form">
+            <div class="form-group">
+              <label for="creatorName" class="form-label">Creator Name *</label>
+              <input
+                type="text"
+                id="creatorName"
+                class="form-input"
+                placeholder="Enter your name"
+                required
+              />
+              <span class="error-message" id="creatorNameError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="vlogTitle" class="form-label">Vlog Title *</label>
+              <input
+                type="text"
+                id="vlogTitle"
+                class="form-input"
+                placeholder="Enter vlog title"
+                required
+              />
+              <span class="error-message" id="vlogTitleError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="description" class="form-label">Description *</label>
+              <textarea
+                id="description"
+                class="form-textarea"
+                rows="4"
+                placeholder="Tell us about your vlog..."
+                required
+              ></textarea>
+              <span class="error-message" id="descriptionError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="videoUrl" class="form-label"
+                >Video URL (YouTube Embed) *</label
+              >
+              <input
+                type="url"
+                id="videoUrl"
+                class="form-input"
+                placeholder="https://www.youtube.com/embed/..."
+                required
+              />
+              <small class="form-hint"
+                >Example: https://www.youtube.com/embed/dQw4w9WgXcQ</small
+              >
+              <span class="error-message" id="videoUrlError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="category" class="form-label">Category *</label>
+              <select id="category" class="form-select" required>
+                <option value="">Select a category</option>
+                <option value="Travel">Travel</option>
+                <option value="Tech">Tech</option>
+                <option value="Food">Food</option>
+                <option value="Daily">Daily</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Music">Music</option>
+                <option value="Education">Education</option>
+              </select>
+              <span class="error-message" id="categoryError"></span>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="btn btn-primary btn-large"
+                id="submitBtn"
+              >
+                Submit Vlog
+              </button>
+              <a href="index.html" class="btn btn-secondary btn-large"
+                >Cancel</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 VlogSphere. Share your story with the world.</p>
+      </div>
+    </footer>
+
+    <script src="js/addVlog.js"></script>
+  </body>
+</html>
