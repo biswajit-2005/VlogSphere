@@ -42,4 +42,33 @@ router.post("/:id/dislike", async (req, res) => {
   }
 });
 
+// POST: Create a new vlog
+router.post("/", async (req, res) => {
+  const { creatorName, title, description, videoUrl, category, uploadDate } =
+    req.body;
+
+  // Server-side validation (Simple check)
+  if (!creatorName || !title || !description || !videoUrl || !category) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const vlog = new Vlog({
+    creatorName,
+    title,
+    description,
+    videoUrl,
+    category,
+    uploadDate: uploadDate || new Date(),
+    likes: 0, // Initialize counts
+    dislikes: 0,
+  });
+
+  try {
+    const newVlog = await vlog.save();
+    res.status(201).json(newVlog);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 module.exports = router;

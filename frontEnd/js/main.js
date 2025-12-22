@@ -183,7 +183,6 @@ const handleSearch = () => {
     return matchesSearch && matchesCategory;
   });
 
-  
   displayVlogs(filteredVlogs);
 };
 
