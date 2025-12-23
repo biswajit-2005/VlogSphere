@@ -15,10 +15,10 @@ app.use(cors()); // Allows your frontend to talk to this server
 app.use(express.json()); // Parses incoming JSON requests (req.body)
 
 // --- Database Connection ---
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+// mongoose
+//   .connect(process.env.MONGODB_URI)
+//   .then(() => console.log("✅ Connected to MongoDB"))
+//   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // --- Routes ---
 // This mounts all routes from vlogs.js under the /api/vlogs prefix

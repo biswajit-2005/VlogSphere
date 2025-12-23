@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Vlog = require("../models/vlog");
+const Vlog = require("../models/MOCK_DATA (1).json");
 
 // GET all vlogs
 router.get("/", async (req, res) => {
