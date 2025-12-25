@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     // res.json(vlogs);
     res.json(Vlog);
   } catch (err) {
-    console.error("error in route");
+    console.error("error in connecting mongodb or fethching data.");
     res.status(500).json({ message: err.message });
   }
 });
@@ -23,6 +23,7 @@ router.post("/:id/like", async (req, res) => {
     const vlog = await Vlog.findByIdAndUpdate(req.params.id, update, {
       new: true,
     });
+    console.log("liked");
     res.json(vlog);
   } catch (err) {
     res.status(400).json({ message: err.message });
