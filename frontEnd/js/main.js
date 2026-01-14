@@ -19,18 +19,12 @@ let allVlogs = [];
 let filteredVlogs = [];
 let userInteractions = {}; // Store user likes/dislikes locally
 
-/**
- * Initialize the application
- */
 const init = () => {
   loadUserInteractions();
   fetchVlogs();
   setupEventListeners();
 };
 
-/**
- * Setup event listeners for search and filter
- */
 const setupEventListeners = () => {
   // Real-time search
   searchInput.addEventListener("input", handleSearch);
@@ -39,9 +33,6 @@ const setupEventListeners = () => {
   categoryFilter.addEventListener("change", handleCategoryFilter);
 };
 
-/**
- * Fetch vlogs from the backend API
- */
 const fetchVlogs = async () => {
   try {
     showLoading();
@@ -205,11 +196,6 @@ const handleCategoryFilter = () => {
   displayVlogs(filteredVlogs);
 };
 
-/**
- * Format date to readable string
- * @param {string|Date} date - Date to format
- * @returns {string} - Formatted date string
- */
 const formatDate = (date) => {
   const dateObj = new Date(date);
   const now = new Date();
@@ -234,12 +220,6 @@ const formatDate = (date) => {
   }
 };
 
-/**
- * Truncate text to specified length
- * @param {string} text - Text to truncate
- * @param {number} maxLength - Maximum length
- * @returns {string} - Truncated text
- */
 const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) {
     return text;
@@ -247,11 +227,6 @@ const truncateText = (text, maxLength) => {
   return text.substring(0, maxLength).trim() + "...";
 };
 
-/**
- * Escape HTML to prevent XSS
- * @param {string} text - Text to escape
- * @returns {string} - Escaped text
- */
 const escapeHtml = (text) => {
   const div = document.createElement("div");
   div.textContent = text;
@@ -283,27 +258,15 @@ const showEmpty = () => {
   errorMessage.classList.add("hidden");
 };
 
-/**
- * Hide empty message
- */
 const hideEmpty = () => {
   emptyMessage.classList.add("hidden");
 };
 
-/**
- * Show error message
- */
 const showError = () => {
   errorMessage.classList.remove("hidden");
   emptyMessage.classList.add("hidden");
 };
 
-/**
- * Handle like button click
- * @param {string} vlogId - Vlog ID
- * @param {HTMLElement} likeBtn - Like button element
- * @param {HTMLElement} dislikeBtn - Dislike button element
- */
 const handleLike = async (vlogId, likeBtn, dislikeBtn) => {
   const currentInteraction = userInteractions[vlogId];
   const likeCount = likeBtn.querySelector(".like-count");
@@ -344,12 +307,6 @@ const handleLike = async (vlogId, likeBtn, dislikeBtn) => {
   );
 };
 
-/**
- * Handle dislike button click
- * @param {string} vlogId - Vlog ID
- * @param {HTMLElement} likeBtn - Like button element
- * @param {HTMLElement} dislikeBtn - Dislike button element
- */
 const handleDislike = async (vlogId, likeBtn, dislikeBtn) => {
   const currentInteraction = userInteractions[vlogId];
   const likeCount = likeBtn.querySelector(".like-count");
@@ -390,12 +347,6 @@ const handleDislike = async (vlogId, likeBtn, dislikeBtn) => {
   );
 };
 
-/**
- * Update vlog interaction on backend
- * @param {string} vlogId - Vlog ID
- * @param {string} type - 'like' or 'dislike'
- * @param {boolean} isActive - Whether the interaction is active
- */
 const updateVlogInteraction = async (vlogId, type, isActive) => {
   try {
     const response = await fetch(`${API_BASE_URL}/vlogs/${vlogId}/${type}`, {

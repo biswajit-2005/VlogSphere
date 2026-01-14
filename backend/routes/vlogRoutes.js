@@ -9,10 +9,10 @@ const {
 
 router.get("/vlogs", getAllVlogs);
 
-router.post("/:id/like", updateLike);
-
-router.post("/:id/dislike", updateDislike);
-
 router.post("/create", createVlog);
+
+router.post("/vlogs/:id/like", updateLike);
+
+router.post("/vlogs/:id/dislike", updateDislike);
 
 module.exports = router;
