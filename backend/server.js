@@ -14,6 +14,11 @@ app.use(
 );
 app.use(express.json());
 app.use("/api", vlogRoutes);
+
+app.get("/health", (req, res) => {
+  res.send("Backend OK");
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   connectToDb();
