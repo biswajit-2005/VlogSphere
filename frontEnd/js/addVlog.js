@@ -108,15 +108,21 @@ const validateVideoUrl = () => {
     return false;
   }
 
-  // Validate YouTube embed URL format
-  const youtubeEmbedPattern = /^https:\/\/(www\.)?youtube\.com\/embed\/[\w-]+/;
-  if (!youtubeEmbedPattern.test(value)) {
-    showFieldError(
-      videoUrlError,
-      "Please provide a valid YouTube embed URL (https://www.youtube.com/embed/...)"
-    );
+  // Extract YouTube video ID
+  const match = value.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/
+  );
+
+  if (!match || !match[1]) {
+    showFieldError(videoUrlError, "Please provide a valid YouTube video link");
     return false;
   }
+
+  // Convert to embed URL
+  const embedUrl = `https://www.youtube.com/embed/${match[1]}`;
+
+  // Replace input value with embed URL (internal conversion)
+  videoUrlInput.value = embedUrl;
 
   hideFieldError(videoUrlError);
   return true;
