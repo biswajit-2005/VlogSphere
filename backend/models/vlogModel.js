@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => {
-    console.error("❌ MongoDB Connection Error:", err);
-    process.exit(1);
-  });
-
 const vlogSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, required: true },
@@ -19,4 +11,5 @@ const vlogSchema = new mongoose.Schema({
   uploadDate: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Vlog", vlogSchema);
+const vlog = mongoose.model("Vlog", vlogSchema);
+module.exports = vlog;
