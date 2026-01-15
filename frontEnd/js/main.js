@@ -117,7 +117,11 @@ const createVlogCard = (vlog) => {
         <div class="vlog-content">
             <span class="vlog-category">${vlog.category}</span>
             <h3 class="vlog-title">${escapeHtml(vlog.title)}</h3>
-            <p class="vlog-description">${escapeHtml(truncatedDescription)}</p>
+            <div class="vlog-description-container">
+                <p class="vlog-description">${escapeHtml(
+                  truncatedDescription
+                )}</p>
+            </div>
             <div class="vlog-meta">
                 <span class="vlog-creator">By ${escapeHtml(
                   vlog.creatorName
@@ -149,12 +153,19 @@ const createVlogCard = (vlog) => {
   const likeBtn = card.querySelector(".like-btn");
   const dislikeBtn = card.querySelector(".dislike-btn");
 
-  likeBtn.addEventListener("click", () =>
-    handleLike(vlog._id || vlog.id, likeBtn, dislikeBtn)
-  );
-  dislikeBtn.addEventListener("click", () =>
-    handleDislike(vlog._id || vlog.id, likeBtn, dislikeBtn)
-  );
+  likeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    handleLike(vlog._id || vlog.id, likeBtn, dislikeBtn);
+  });
+  dislikeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    handleDislike(vlog._id || vlog.id, likeBtn, dislikeBtn);
+  });
+
+  // Add click handler to open vlog detail page
+  card.addEventListener("click", () => {
+    navigateToVlogDetail(vlog._id || vlog.id);
+  });
 
   return card;
 };
@@ -393,6 +404,14 @@ const saveUserInteractions = () => {
   } catch (error) {
     console.error("Error saving user interactions:", error);
   }
+};
+
+/**
+ * Navigate to vlog detail page
+ * @param {string} vlogId - The ID of the vlog to view
+ */
+const navigateToVlogDetail = (vlogId) => {
+  window.location.href = `vlog-detail.html?id=${vlogId}`;
 };
 
 // Initialize app when DOM is ready
