@@ -3,11 +3,14 @@ const router = express.Router();
 const {
   createVlog,
   getAllVlogs,
+  getVlogById,
   updateLike,
   updateDislike,
 } = require("../controllers/vlogController.js");
 
 router.get("/vlogs", getAllVlogs);
+
+router.get("/vlogs/:id", getVlogById);
 
 router.post("/create", createVlog);
 

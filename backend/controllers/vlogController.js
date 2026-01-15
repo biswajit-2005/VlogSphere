@@ -11,6 +11,19 @@ const getAllVlogs = async (req, res) => {
   }
 };
 
+const getVlogById = async (req, res) => {
+  try {
+    const vlog = await Vlog.findById(req.params.id);
+    if (!vlog) {
+      return res.status(404).json({ message: "Vlog not found" });
+    }
+    res.status(200).json(vlog);
+  } catch (error) {
+    console.error("Error fetching vlog:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const updateLike = async (req, res) => {
   try {
     const { active } = req.body; //active true if user added like, false if removed or dislike
@@ -92,6 +105,7 @@ const createVlog = async (req, res) => {
 
 module.exports = {
   getAllVlogs,
+  getVlogById,
   updateLike,
   updateDislike,
   createVlog,
