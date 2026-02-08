@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - VlogSphere</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Font for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <h1>VlogSphere</h1>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="add-vlog.html" class="nav-link">Add Vlog</a>
+            <a href="login.html" class="nav-link active">Login</a>
+            <a href="signup.html" class="nav-link">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+      <div class="container">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <h2 class="auth-title">Welcome Back</h2>
+            <p class="auth-subtitle">Log in to your VlogSphere account</p>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="alert alert-error hidden">
+              <strong>Error!</strong>
+              <span id="errorText"
+                >Something went wrong. Please try again.</span
+              >
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="alert alert-success hidden">
+              <strong>Success!</strong> You have been logged in successfully.
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+              <!-- Email Field -->
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="Enter your email address"
+                  required
+                />
+                <span class="error-message" id="emailError"></span>
+              </div>
+
+              <!-- Password Field -->
+              <div class="form-group">
+                <label for="password" class="form-label">Password *</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-input"
+                  placeholder="Enter your password"
+                  required
+                />
+                <span class="error-message" id="passwordError"></span>
+              </div>
+
+              <!-- Remember Me -->
+              <div class="form-group form-checkbox-group">
+                <input type="checkbox" id="rememberMe" class="form-checkbox" />
+                <label for="rememberMe" class="form-checkbox-label">
+                  Remember me
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary btn-large btn-block">
+                Log In
+              </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider">
+              <span>OR</span>
+            </div>
+
+            <!-- Google Login Button -->
+            <button
+              id="googleLoginBtn"
+              class="btn btn-google btn-large btn-block"
+            >
+              <i class="fab fa-google"></i> Log in with Google
+            </button>
+
+            <!-- Forgot Password Link -->
+            <p class="auth-footer">
+              <a href="#" class="auth-link">Forgot your password?</a>
+            </p>
+
+            <!-- Sign Up Link -->
+            <p class="auth-footer">
+              Don't have an account?
+              <a href="signup.html" class="auth-link">Sign up here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Google Sign-In Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

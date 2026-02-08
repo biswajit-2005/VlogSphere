@@ -4,7 +4,8 @@
  */
 
 // API Configuration
-const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+//const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // DOM Elements
 const addVlogForm = document.getElementById("addVlogForm");
@@ -26,9 +27,23 @@ const videoUrlError = document.getElementById("videoUrlError");
 const categoryError = document.getElementById("categoryError");
 
 const init = () => {
+  const token = localStorage.getItem("authToken");
+
+  // If user is NOT logged in
+  if (!token) {
+    // Remember where the user wanted to go
+    localStorage.setItem("redirectAfterLogin", "add-vlog.html");
+
+    // Redirect to login
+    window.location.href = "login.html";
+    return;
+  }
+
+  // If user IS logged in, allow access
   setupFormValidation();
   addVlogForm.addEventListener("submit", handleSubmit);
 };
+
 
 const setupFormValidation = () => {
   creatorNameInput.addEventListener("blur", () => validateCreatorName());
@@ -49,7 +64,7 @@ const validateCreatorName = () => {
   if (value.length < 2) {
     showFieldError(
       creatorNameError,
-      "Creator name must be at least 2 characters"
+      "Creator name must be at least 2 characters",
     );
     return false;
   }
@@ -86,7 +101,7 @@ const validateDescription = () => {
   if (value.length < 10) {
     showFieldError(
       descriptionError,
-      "Description must be at least 10 characters"
+      "Description must be at least 10 characters",
     );
     return false;
   }
@@ -110,7 +125,7 @@ const validateVideoUrl = () => {
 
   // Extract YouTube video ID
   const match = value.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/,
   );
 
   if (!match || !match[1]) {
@@ -196,11 +211,12 @@ const submitVlog = async (vlogData) => {
   try {
     // Disable submit button
     setSubmitButtonState(true);
-
+    const token = localStorage.getItem("authToken");
     const response = await fetch(`${API_BASE_URL}/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(vlogData),
     });

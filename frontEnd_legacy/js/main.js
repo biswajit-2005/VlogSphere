@@ -4,7 +4,8 @@
  */
 
 // API Configuration
-const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+//const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // DOM Elements
 const vlogsContainer = document.getElementById("vlogsContainer");
@@ -91,7 +92,7 @@ const createVlogCard = (vlog) => {
 
   // Format date
   const formattedDate = formatDate(
-    vlog.uploadDate || vlog.createdAt || new Date()
+    vlog.uploadDate || vlog.createdAt || new Date(),
   );
 
   // Truncate description
@@ -119,12 +120,12 @@ const createVlogCard = (vlog) => {
             <h3 class="vlog-title">${escapeHtml(vlog.title)}</h3>
             <div class="vlog-description-container">
                 <p class="vlog-description">${escapeHtml(
-                  truncatedDescription
+                  truncatedDescription,
                 )}</p>
             </div>
             <div class="vlog-meta">
                 <span class="vlog-creator">By ${escapeHtml(
-                  vlog.creatorName
+                  vlog.creatorName,
                 )}</span>
                 <span class="vlog-date">${formattedDate}</span>
             </div>
@@ -314,7 +315,7 @@ const handleLike = async (vlogId, likeBtn, dislikeBtn) => {
   await updateVlogInteraction(
     vlogId,
     "like",
-    userInteractions[vlogId] === "like"
+    userInteractions[vlogId] === "like",
   );
 };
 
@@ -354,7 +355,7 @@ const handleDislike = async (vlogId, likeBtn, dislikeBtn) => {
   await updateVlogInteraction(
     vlogId,
     "dislike",
-    userInteractions[vlogId] === "dislike"
+    userInteractions[vlogId] === "dislike",
   );
 };
 
@@ -399,7 +400,7 @@ const saveUserInteractions = () => {
   try {
     localStorage.setItem(
       "vlogSphereInteractions",
-      JSON.stringify(userInteractions)
+      JSON.stringify(userInteractions),
     );
   } catch (error) {
     console.error("Error saving user interactions:", error);

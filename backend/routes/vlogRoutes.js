@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const protect = require("../middlewares/authMiddlewares.js");
 const {
   createVlog,
   getAllVlogs,
@@ -12,10 +13,10 @@ router.get("/vlogs", getAllVlogs);
 
 router.get("/vlogs/:id", getVlogById);
 
-router.post("/create", createVlog);
+router.post("/create", protect, createVlog);
 
-router.post("/vlogs/:id/like", updateLike);
+router.post("/vlogs/:id/like", protect, updateLike);
 
-router.post("/vlogs/:id/dislike", updateDislike);
+router.post("/vlogs/:id/dislike", protect, updateDislike);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Vlog = require("../models/vlogModel.js");
-
 const getAllVlogs = async (req, res) => {
   try {
     const vlogs = await Vlog.find().sort({ uploadDate: -1 });

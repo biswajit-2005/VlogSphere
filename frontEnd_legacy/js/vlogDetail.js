@@ -4,8 +4,8 @@
  */
 
 // API Configuration
-const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-// const API_BASE_URL = "http://localhost:5000/api";
+//const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // DOM Elements
 const detailVideoFrame = document.getElementById("detailVideoFrame");
