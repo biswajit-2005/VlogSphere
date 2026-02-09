@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const vlogRoutes = require("./routes/vlogRoutes.js");
-const authRoutes = require("./routes/authRoutes.js");
-const connectToDb = require("./config/db.js");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import vlogRoutes from "./routes/vlogRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import connectToDb from "./config/db.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Vlog = require("../models/vlogModel.js");
+import mongoose from "mongoose";
+import Vlog from "../models/vlogModel.js";
 const getAllVlogs = async (req, res) => {
   try {
     const vlogs = await Vlog.find().sort({ uploadDate: -1 });
@@ -102,7 +102,7 @@ const createVlog = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getAllVlogs,
   getVlogById,
   updateLike,

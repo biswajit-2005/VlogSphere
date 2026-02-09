@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const protect = require("../middlewares/authMiddlewares.js");
-const {
+import protect from "../middlewares/authMiddlewares.js";
+import {
   createVlog,
   getAllVlogs,
   getVlogById,
   updateLike,
   updateDislike,
-} = require("../controllers/vlogController.js");
+} from "../controllers/vlogController.js";
 
 router.get("/vlogs", getAllVlogs);
 
@@ -19,4 +19,4 @@ router.post("/vlogs/:id/like", protect, updateLike);
 
 router.post("/vlogs/:id/dislike", protect, updateDislike);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
+import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 
 const protect = async (req, res, next) => {
   let token = req.headers.authorization;
@@ -19,4 +19,4 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = protect;
+export default protect;
