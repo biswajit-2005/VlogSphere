@@ -6,7 +6,7 @@ const vlogSchema = new mongoose.Schema({
   videoUrl: { type: String, required: true }, // Ensure this is the embed link
   category: { type: String, required: true },
   // creatorName: { type: String, required: true },
-  creatorName: {
+  creatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,

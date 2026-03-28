@@ -1,8 +1,11 @@
-import mongoose from "mongoose";
 import Vlog from "../models/vlogModel.js";
-const getAllVlogs = async (req, res) => {
+import User from "../models/userModel.js";
+
+export const getAllVlogs = async (req, res) => {
   try {
-    const vlogs = await Vlog.find().sort({ uploadDate: -1 });
+    const vlogs = await Vlog.find()
+      .populate("creatorId", "name")
+      .sort({ uploadDate: -1 });
     res.status(200).send(vlogs);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -10,9 +13,12 @@ const getAllVlogs = async (req, res) => {
   }
 };
 
-const getVlogById = async (req, res) => {
+export const getVlogById = async (req, res) => {
   try {
-    const vlog = await Vlog.findById(req.params.id);
+    const vlog = await Vlog.findById(req.params.id).populate(
+      "creatorId",
+      "name",
+    );
     if (!vlog) {
       return res.status(404).json({ message: "Vlog not found" });
     }
@@ -23,7 +29,7 @@ const getVlogById = async (req, res) => {
   }
 };
 
-const updateLike = async (req, res) => {
+export const updateLike = async (req, res) => {
   try {
     const { active } = req.body; //active true if user added like, false if removed or dislike
     let incValue = 0;
@@ -36,7 +42,7 @@ const updateLike = async (req, res) => {
     const vlog = await Vlog.findByIdAndUpdate(
       req.params.id,
       { $inc: { likes: incValue } },
-      { new: true }
+      { new: true },
     );
 
     if (!vlog) {
@@ -50,7 +56,7 @@ const updateLike = async (req, res) => {
   }
 };
 
-const updateDislike = async (req, res) => {
+export const updateDislike = async (req, res) => {
   try {
     const { active } = req.body;
     let incValue = 0;
@@ -63,7 +69,7 @@ const updateDislike = async (req, res) => {
     const vlog = await Vlog.findByIdAndUpdate(
       req.params.id,
       { $inc: { dislikes: incValue } },
-      { new: true }
+      { new: true },
     );
 
     if (!vlog) {
@@ -75,17 +81,16 @@ const updateDislike = async (req, res) => {
     res.status(500).json({ message: "Failed to update dislike" });
   }
 };
-const createVlog = async (req, res) => {
+export const createVlog = async (req, res) => {
   try {
-    const { creatorName, title, description, videoUrl, category, uploadDate } =
-      req.body;
+    const { title, description, videoUrl, category } = req.body;
 
     // Server-side validation (Simple check)
-    if (!creatorName || !title || !description || !videoUrl || !category) {
+    if (!title || !description || !videoUrl || !category) {
       return res.status(400).json({ message: "All fields are required" });
     }
     const vlog = new Vlog({
-      creatorName,
+      creatorId: req.user._id,
       title,
       description,
       videoUrl,
@@ -100,12 +105,4 @@ const createVlog = async (req, res) => {
     console.error("Error creating vlog:", error);
     res.status(500).json({ message: "cannot create vlog" });
   }
-};
-
-export {
-  getAllVlogs,
-  getVlogById,
-  updateLike,
-  updateDislike,
-  createVlog,
 };
