@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-const API_BASE_URL = "http://localhost:3000/api";
+import { API_BASE_URL } from '../utils/api';
 
 const AddVlog = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        creatorName: '',
         title: '',
         description: '',
         videoUrl: '',
@@ -28,8 +26,6 @@ const AddVlog = () => {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.creatorName.trim()) newErrors.creatorName = 'Creator name is required';
-        else if (formData.creatorName.length < 2) newErrors.creatorName = 'Creator name must be at least 2 characters';
 
         if (!formData.title.trim()) newErrors.title = 'Vlog title is required';
         else if (formData.title.length < 5) newErrors.title = 'Vlog title must be at least 5 characters';
@@ -102,7 +98,6 @@ const AddVlog = () => {
 
             setSuccess('Vlog submitted successfully!');
             setFormData({
-                creatorName: '',
                 title: '',
                 description: '',
                 videoUrl: '',
@@ -142,19 +137,6 @@ const AddVlog = () => {
                     )}
 
                     <form className="vlog-form" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="creatorName" className="form-label">Creator Name</label>
-                            <input
-                                type="text"
-                                id="creatorName"
-                                name="creatorName"
-                                className="form-input"
-                                value={formData.creatorName}
-                                onChange={handleChange}
-                                placeholder="Enter your name"
-                            />
-                            {errors.creatorName && <span className="error-message">{errors.creatorName}</span>}
-                        </div>
 
                         <div className="form-group">
                             <label htmlFor="vlogTitle" className="form-label">Vlog Title</label>

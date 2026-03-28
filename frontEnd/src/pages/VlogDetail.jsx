@@ -3,8 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { formatDate } from '../utils/helpers';
 
-// const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-const API_BASE_URL = "http://localhost:3000/api";
+import { API_BASE_URL } from '../utils/api';
 
 const VlogDetail = () => {
     const { id } = useParams();
@@ -179,7 +178,7 @@ const VlogDetail = () => {
                                 <span className="detail-date">{formatDate(vlog.uploadDate || vlog.createdAt)}</span>
                             </div>
                             <h2 className="detail-title">{vlog.title}</h2>
-                            <div className="detail-creator-info">By {vlog.creatorName}</div>
+                            <div className="detail-creator-info">By {vlog.creatorId?.name || 'Unknown'}</div>
                         </div>
 
                         <div className="detail-description-container">

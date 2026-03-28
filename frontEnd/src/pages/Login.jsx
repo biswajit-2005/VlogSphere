@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-const API_BASE_URL = "http://localhost:3000/api";
+import { API_BASE_URL } from '../utils/api';
 
 const Login = () => {
     const navigate = useNavigate();

@@ -42,7 +42,7 @@ const VlogCard = ({ vlog, onLike, onDislike, userInteraction }) => {
                     </p>
                 </div>
                 <div className="vlog-meta">
-                    <span className="vlog-creator">By {vlog.creatorName}</span>
+                    <span className="vlog-creator">By {vlog.creatorId?.name || 'Unknown'}</span>
                     <span className="vlog-date">
                         {formatDate(vlog.uploadDate || vlog.createdAt)}
                     </span>
