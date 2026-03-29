@@ -11,14 +11,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = async (email, url) => {
+export const sendEmail = async (email, otpCode) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Verification",
-      html: `<a href="${url}">${url}</a>`,
       text: "Hello from deployed backend click the link to verify",
+      text: otpCode,
     });
   } catch (error) {
     console.log(error, "error in sending email");

@@ -30,11 +30,12 @@ export const signUp = async (req, res) => {
     await Otp.create({
       userId: user._id,
       email,
-      otpCode,
+      otp: otpCode,
       expiresIn: new Date(Date.now() + 5 * 60 * 1000), //5 minutes
     });
     await sendEmail(user.email, otpCode);
     console.log(otpCode);
+    console.log(user._id);
     // const emailtoken = jwt.sign(
     //   { email: user.email, id: user._id },
     //   process.env.JWT_EMAIL_KEY,
@@ -177,7 +178,7 @@ export const googleLogin = async (req, res) => {
 };
 export const verifyUser = async (req, res) => {
   try {
-    const { userId, otpCode } = req.query;
+    const { userId, otpCode } = req.body;
     if (!userId || !otpCode) {
       return res.status(400).json({ message: "all fields are required" });
     }

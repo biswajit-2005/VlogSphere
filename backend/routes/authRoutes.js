@@ -2,7 +2,7 @@ import express from "express";
 import {
   signUp,
   googleLogin,
-  verifyMail,
+  verifyUser,
   login,
   logout,
   refreshToken,
@@ -20,7 +20,7 @@ router.post("/signUp", signUp);
 
 router.post("/googleLogin", googleLogin);
 
-router.get("/verifyMail", verifyMail);
+router.post("/verifyUser", verifyUser);
 
 router.post("/login", login);
 
