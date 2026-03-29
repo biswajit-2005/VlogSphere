@@ -7,9 +7,9 @@ const protect = async (req, res, next) => {
   if (token && token.startsWith("Bearer")) {
     try {
       token = token.split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY);
 
-      User.findById(decoded.id).select("-password"); //fetch all fields except password
+      req.user = await User.findById(decoded.id).select("-password"); //fetch all fields except password
       next();
     } catch {
       return res.status(401).json({ message: "Not authorized" });

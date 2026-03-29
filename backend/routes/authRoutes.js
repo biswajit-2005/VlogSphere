@@ -9,6 +9,7 @@ import {
   forgotPassword,
   resetPassword,
   getMe,
+  resendOtp,
 } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 
@@ -21,6 +22,8 @@ router.post("/signUp", signUp);
 router.post("/googleLogin", googleLogin);
 
 router.post("/verifyUser", verifyUser);
+
+router.post("/resendOtp", resendOtp);
 
 router.post("/login", login);
 

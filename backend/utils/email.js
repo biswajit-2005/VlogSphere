@@ -17,8 +17,7 @@ export const sendEmail = async (email, otpCode) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Verification",
-      text: "Hello from deployed backend click the link to verify",
-      text: otpCode,
+      text: `Hello from VlogSphere. Your verification code is: ${otpCode}`,
     });
   } catch (error) {
     console.log(error, "error in sending email");

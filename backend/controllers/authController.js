@@ -36,17 +36,6 @@ export const signUp = async (req, res) => {
     await sendEmail(user.email, otpCode);
     console.log(otpCode);
     console.log(user._id);
-    // const emailtoken = jwt.sign(
-    //   { email: user.email, id: user._id },
-    //   process.env.JWT_EMAIL_KEY,
-    //   {
-    //     expiresIn: "1d",
-    //   },
-    // );
-
-    // const url = `http://localhost:3000/verify/${emailtoken}`;
-    // await sendEmail(user.email, url);
-    //console.log(url);
 
     res.status(200).json({
       message: "user created successfully , Verify your mail with OTP.",
@@ -78,6 +67,10 @@ export const login = async (req, res) => {
     }
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
+    //test
+    console.log("Accesstoken in terminal", accessToken);
+    console.log("Refreshtoken in terminal", refreshToken);
+
     //save refresh token in db
     user.refreshToken = refreshToken;
     await user.save();
@@ -211,6 +204,42 @@ export const verifyUser = async (req, res) => {
       message:
         "Invalid or expired token. Please register/request a new verification email.",
     });
+  }
+};
+
+export const resendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "email is required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({ message: "user already verified" });
+    }
+
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    await Otp.deleteMany({ userId: user._id });
+
+    await Otp.create({
+      userId: user._id,
+      email,
+      otp: otpCode,
+      expiresIn: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes
+    });
+
+    await sendEmail(user.email, otpCode);
+
+    res.status(200).json({
+      message: "A new OTP has been sent to your email.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to resend OTP" });
   }
 };
 

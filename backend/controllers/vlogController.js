@@ -95,7 +95,7 @@ export const createVlog = async (req, res) => {
       description,
       videoUrl,
       category,
-      uploadDate: uploadDate || Date.now(),
+      uploadDate: req.body.uploadDate || Date.now(),
       likes: 0, // Initialize counts
       dislikes: 0,
     });
