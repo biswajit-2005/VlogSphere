@@ -3,8 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ThumbsUp, ThumbsDown } from "lucide-react";
 import { formatDate } from "../utils/helpers";
 
-const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-//const API_BASE_URL = "http://localhost:3000/api";
+//const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 const VlogDetail = () => {
   const { id } = useParams();

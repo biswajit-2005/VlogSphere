@@ -36,7 +36,7 @@ const updateLike = async (req, res) => {
     const vlog = await Vlog.findByIdAndUpdate(
       req.params.id,
       { $inc: { likes: incValue } },
-      { new: true }
+      { new: true },
     );
 
     if (!vlog) {
@@ -63,7 +63,7 @@ const updateDislike = async (req, res) => {
     const vlog = await Vlog.findByIdAndUpdate(
       req.params.id,
       { $inc: { dislikes: incValue } },
-      { new: true }
+      { new: true },
     );
 
     if (!vlog) {
@@ -102,10 +102,4 @@ const createVlog = async (req, res) => {
   }
 };
 
-export {
-  getAllVlogs,
-  getVlogById,
-  updateLike,
-  updateDislike,
-  createVlog,
-};
+export { getAllVlogs, getVlogById, updateLike, updateDislike, createVlog };

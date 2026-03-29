@@ -5,12 +5,12 @@ const vlogSchema = new mongoose.Schema({
   description: { type: String, required: true },
   videoUrl: { type: String, required: true }, // Ensure this is the embed link
   category: { type: String, required: true },
-  // creatorName: { type: String, required: true },
-  creatorName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  creatorName: { type: String, required: true },
+  // creatorName: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
   likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
