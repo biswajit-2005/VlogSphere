@@ -222,7 +222,7 @@ export const resendOtp = async (req, res) => {
     }
 
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-    
+
     await Otp.deleteMany({ userId: user._id });
 
     await Otp.create({
