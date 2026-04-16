@@ -3,8 +3,8 @@ import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import VlogCard from "../components/VlogCard";
 
-//const API_BASE_URL = "https://vlogsphere.onrender.com/api";
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "https://vlogsphere.onrender.com/api";
+//const API_BASE_URL = "http://localhost:3000/api";
 
 const Home = () => {
   const [allVlogs, setAllVlogs] = useState([]);
