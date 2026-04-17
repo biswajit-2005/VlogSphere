@@ -2,7 +2,11 @@ import User from "../models/userModel.js";
 import Otp from "../models/otpModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  generatePasswordResetToken,
+} from "../utils/token.js";
 import { sendEmail } from "../utils/email.js";
 import { OAuth2Client } from "google-auth-library";
 import crypto from "crypto"; //for forget password
@@ -320,43 +324,89 @@ export const forgotPassword = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
-    await user.save();
 
-    const resetUrl = `http://localhost:3000/resetPassword/${resetToken}`;
-    await sendEmail(user.email, resetUrl);
+    //generate otp and send it to user
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    await Otp.deleteMany({ userId: user._id });
+    await Otp.create({
+      userId: user._id,
+      email,
+      otp,
+      expiresIn: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes
+    });
+    await sendEmail(user.email, otp);
 
-    res
-      .status(200)
-      .json({ message: `Password reset link sent to ${user.email}` });
+    res.status(200).json({ message: `Password otp sent to ${user.email}` });
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: "Password reset failed" });
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const verifyOtp = async (req, res) => {
   try {
-    const { resetPasswordToken, password } = req.body;
-    if (!resetPasswordToken || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({ message: "Email and OTP are required" });
     }
-    const user = await User.findOne({
-      resetPasswordToken,
-      resetPasswordTokenExpiry: { $gt: Date.now() },
-    });
+    const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "Invalid email or token expired" });
+      return res.status(400).json({ message: "User not found" });
     }
 
+    const otpData = await Otp.findOne({ userId: user._id, otp });
+    if (!otpData) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+    if (otpData.expiresIn < Date.now()) {
+      return res.status(400).json({ message: "OTP expired" });
+    }
+    const passwordResetToken = generatePasswordResetToken(user);
+    res.cookie("resetPasswordToken", passwordResetToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+    await Otp.deleteMany({ userId: user._id });
+    res.status(200).json({
+      message: "OTP verified successfully.cookies sent , Enter new password",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "OTP verification failed" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (!password) {
+      return res.status(400).json({ message: "Password is required" });
+    }
+
+    const passwordResetToken = req.cookies.resetPasswordToken;
+    if (!passwordResetToken) {
+      return res
+        .status(400)
+        .json({ message: "Password reset token not found" });
+    }
+    const decoded = jwt.verify(
+      passwordResetToken,
+      process.env.JWT_PASSWORD_RESET_KEY,
+    );
+    if (!decoded) {
+      return res.status(400).json({ message: "Invalid password reset token" });
+    }
+
+    const user = await User.findOne({ _id: decoded.id });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    res.clearCookie("resetPasswordToken");
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordTokenExpiry = undefined;
+
     await user.save();
     res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {

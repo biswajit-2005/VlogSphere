@@ -7,15 +7,16 @@ import {
   logout,
   refreshToken,
   forgotPassword,
+  verifyOtp,
   resetPassword,
   getMe,
   resendOtp,
 } from "../controllers/authController.js";
-import { verifyToken } from "../middlewares/verifyToken.js";
+import { verifyAccessToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/me", verifyToken, getMe);
+router.get("/me", verifyAccessToken, getMe);
 
 router.post("/signUp", signUp);
 
@@ -32,6 +33,8 @@ router.get("/refreshToken", refreshToken);
 router.post("/logout", logout);
 
 router.post("/forgotPassword", forgotPassword);
+
+router.post("/verifyOtp", verifyOtp);
 
 router.post("/resetPassword", resetPassword);
 

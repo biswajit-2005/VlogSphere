@@ -19,6 +19,7 @@ export const sendEmail = async (email, otpCode) => {
       subject: "Verification",
       text: `Hello from VlogSphere. Your verification code is: ${otpCode}`,
     });
+    console.log("Email sent successfully with OTP", otpCode);
   } catch (error) {
     console.log(error, "error in sending email");
   }

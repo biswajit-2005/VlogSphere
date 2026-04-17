@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import protect from "../middlewares/authMiddlewares.js";
-import { verifyToken } from "../middlewares/verifyToken.js";
+import { verifyAccessToken } from "../middlewares/verifyToken.js";
 import {
   createVlog,
   getAllVlogs,
@@ -14,10 +14,10 @@ router.get("/vlogs", getAllVlogs);
 
 router.get("/vlogs/:id", getVlogById);
 
-router.post("/create", verifyToken, createVlog);
+router.post("/create", verifyAccessToken, createVlog);
 
-router.post("/vlogs/:id/like", verifyToken, updateLike);
+router.post("/vlogs/:id/like", verifyAccessToken, updateLike);
 
-router.post("/vlogs/:id/dislike", verifyToken, updateDislike);
+router.post("/vlogs/:id/dislike", verifyAccessToken, updateDislike);
 
 export default router;
